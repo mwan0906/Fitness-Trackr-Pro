@@ -36,7 +36,7 @@ export default function Activity() {
       <h1>{activity?.name}</h1>
       <p>by {activity?.creatorName}</p>
       <p>{activity?.description}</p>
-      <button onClick={tryDelete}>Delete Activity</button>
+      {token && <button onClick={tryDelete}>Delete Activity</button>}
       <Link to="/activities">Return to All Activities</Link>
       {error && <p role="alert">{error}</p>}
     </>

@@ -1,0 +1,28 @@
+import { useState, useEffect } from "react";
+import { getRoutines } from "../api/routines";
+import { useAuth } from "../auth/AuthContext";
+
+import RoutineList from "./RoutineList";
+import RoutineForm from "./RoutineForm";
+
+export default function RoutinesPage() {
+  const { token } = useAuth();
+  const [routines, setRoutines] = useState([]);
+
+  const syncRoutines = async () => {
+    const data = await getRoutines();
+    setRoutines(data);
+  };
+
+  useEffect(() => {
+    syncRoutines();
+  }, []);
+
+  return (
+    <>
+      <h1>Routines</h1>
+      <RoutineList routines={routines} syncRoutines={syncRoutines} />
+      {token && <RoutineForm syncRoutines={syncRoutines} />}
+    </>
+  );
+}
